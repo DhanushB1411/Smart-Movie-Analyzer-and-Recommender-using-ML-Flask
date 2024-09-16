@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Admin Dashboard</h2>
+<a href="{{ url_for('admin_logout') }}">Logout</a>
+
+<!-- Flash messages -->
+{% with messages = get_flashed_messages(with_categories=True) %}
+    {% if messages %}
+        <div class="flash-messages">
+            {% for category, message in messages %}
+                <div class="alert alert-{{ category }}">{{ message }}</div>
+            {% endfor %}
+        </div>
+    {% endif %}
+{% endwith %}
+
+<h3>Movie Reviews</h3>
+<table>
+    <tr>
+        <th>Movie Name</th>
+        <th>Review</th>
+        <th>Emotion</th>
+        <th>Actions</th>
+    </tr>
+    {% for review in Reviews %}
+    <tr>
+        <td>{{ review.moivename }}</td>
+        <td>{{ review.review }}</td>
+        <td>{{ review.emotion }}</td>
+        <td>
+            <form action="{{ url_for('delete_review', id=review.movieid) }}" method="POST">
+                <button type="submit">Delete</button>
+            </form>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+
+<h3>Add New Review</h3>
+<form action="{{ url_for('add_review') }}" method="POST">
+    <label>Movie Name</label>
+    <input type="text" name="movie_name" required>
+    <label>Review</label>
+    <input type="text" name="review" required>
+    <label>Emotion</label>
+    <input type="text" name="emotion" required>
+    <button type="submit">Add Review</button>
+</form>
+
+{% endblock %}

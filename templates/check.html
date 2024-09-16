@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<center>
+<div class="content text-center mb-4" id="home">
+    <h1>{{ movie_name }}</h1>
+</div>
+<div class="card mb-4 shadow-sm">
+    {% if movie_name == 'The Wolf of Wall Street'%}
+    <img src="https://posterspy.com/wp-content/uploads/2020/05/The-Wolf-Of-Wall-Street-.png" class="card-img-top" alt="movie" style="width:35%;">
+    <p>I want you to deal with your problems by becoming RICH</p>
+    <p> There's no nobility in poverty. I've been a rich man & I've been a poor man & I choose rich every f*cking time!</p>
+    {% endif %}
+    {% if movie_name == 'Breaking Bad' %}
+   <img src="https://posterspy.com/wp-content/uploads/2024/05/Breaking-Bad-Small.jpg" class="card-img-top" alt="movie"  style="width: 35%;">
+   <p>“You clearly don’t know who you’re talking to, so let me clue you in. I am not in danger, Skyler. I am the danger.”</p> 
+   {% endif %}
+    {% if movie_name == 'The Boys'%}
+    <img src="https://posterspy.com/wp-content/uploads/2024/07/2.jpg" alt="movie"  style="width: 35%;">
+    <p>"I Dont make Mistakes , I'm not just like the rest of you, I'm Stronger I'm Smatter I'm Better I AM BETTER"</p>
+    {% endif %}
+    {% if movie_name == 'Fight Club'%}
+    <img src="https://posterspy.com/wp-content/uploads/2024/07/bbd4d8187756919.658f362e3bdbe.jpg" class="card-img-top" alt="movie"  style="width: 50%; width:  35%;">
+    <p>"First Rule of the Fight Club is YOu Do not talk about the Fight Club"</p>
+    <p>"You are all-singing and all-dancing crap of the world"</p>
+    {% endif %}
+    {% if movie_name == 'Batman'%}
+    <img src="https://posterspy.com/wp-content/uploads/2024/02/The-Batman-Minimalist-Design-min.jpg" class="card-img-top" alt="movie"  style="width: 35%;">
+    <p>"You are not Brave , MEN ARE BRAVE"</p>
+    {% endif %}
+    <div class="card-body text-center">
+        <h2>Watched already? Give your response</h2>
+        <form action="{{ url_for('batman') }}" method="post" class="mt-3">
+            <div class="form-group">
+                <input type="text" name="review" class="form-control" placeholder="Liked it.." required>
+                <input type="hidden" name="movie" value="{{ movie_name }}">
+                <input type="hidden" name="img" value="{{ img }}">
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">Submit</button>
+        </form>
+        <h1 class="mt-4">{{ prediction_text }}</h1>
+    </div>
+</div>
+</center>
+<div class="reviews" id="reviews">
+    <h3>Reviews here</h3>
+    {% for review in Reviews %}
+    <div class="review-box">
+        <p><strong>Movie Name:</strong> {{ review.moivename }}</p>
+        <p><strong>Review:</strong> {{ review.review }}</p>
+        <p><strong>Emotion:</strong> {{ review.emotion }}</p>
+    </div>
+    {% endfor %}
+</div>
+
+<div class="container" id="recommendations">
+    <h1 class="mt-5">Review Counts</h1>
+    <p class="mt-3">Positive Reviews: {{ positive_count }}</p>
+    <p>Negative Reviews: {{ negative_count }}</p>
+    {% if positive_count > negative_count %}
+    <p> Most of them liked this Flim u can watch </p>
+    {% endif %}
+    <a href="{{ url_for('hello_world') }}" class="btn btn-primary mt-3">Back to Home</a>
+</div>
+{% endblock %}
